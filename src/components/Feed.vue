@@ -27,11 +27,13 @@
             <span class="date">{{ article.createdAt }}</span>
           </div>
           <div class="pull-xs-right">
-            <mcv-add-to-favorites
-              :is-favorited="article.favorited"
-              :article-slug="article.slug"
-              :favorites-count="article.favoritesCount"
-            ></mcv-add-to-favorites>
+            <template v-if="isLoggedIn">
+              <mcv-add-to-favorites
+                :is-favorited="article.favorited"
+                :article-slug="article.slug"
+                :favorites-count="article.favoritesCount"
+              ></mcv-add-to-favorites>
+            </template>
           </div>
         </div>
         <router-link
@@ -98,6 +100,9 @@ export default {
     },
     offset() {
       return this.currentPage * limit - limit
+    },
+    isLoggedIn() {
+      return this.$store.state.auth.isLoggedIn
     }
   },
   watch: {
